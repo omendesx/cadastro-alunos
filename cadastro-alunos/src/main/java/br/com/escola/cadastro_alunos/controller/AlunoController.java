@@ -43,7 +43,7 @@ public String salvarAluno(@ModelAttribute Aluno aluno, RedirectAttributes redire
     return "redirect:/alunos";
 }
 
-@GetMapping("/alunos/{id}")
+@GetMapping("/alunos/{id}/editar")
 public String abrirFormularEdicao(@PathVariable Integer id, Model model){
     Aluno aluno = alunoRepository.buscarPorIdAluno(id);
     model.addAttribute("aluno", aluno);

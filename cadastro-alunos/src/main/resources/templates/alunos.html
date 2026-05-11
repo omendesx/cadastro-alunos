@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro alunos</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cadastro de alunos</h1>
+        <p class="mensagem" th:if="${mensagem}" th:text="${mensagem}"></p>
+        <section class="card">
+            <h2>Novo Aluno</h2>
+            <form th:action="@{/alunos}" th:object="${aluno}" method="post">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}" required>
+                <label for="curso">Curso</label>
+                <input type="text" id="curso" th:field="*{curso}">
+                <button type="submit">Cadastrar</button>
+
+            </form>
+
+        </section>
+
+        <section class="card">
+            <h2>Alunos cadastrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-Mail</th>
+                        <th>Curso</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="aluno:${alunos}">
+                        <td th:text="${aluno.id}">1</td>
+                        <td th:text="${aluno.nome}">Maria</td>
+                        <td th:text="${aluno.email}">maria@email.com</td>
+                        <td th:text="${aluno.curso}">Java</td>
+                        <td class="acoes">
+                            <a th:href="@{/alunos/{id}/editar(id=${aluno.id})}" class="botao-editar">Editar</a>
+                            <form th:action="@{/alunos/{id}/excluir(id=${aluno.id})}" method="post">
+                                <button class="botao-excluir" type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(alunos)}">
+                        <td colspan="5">Nenhum aluno cadastrado ainda.</td>
+
+                    </tr>
+
+                </tbody>
+
+
+
+            </table>
+
+
+        </section>
+
+
+
+    </div>
+
+
+
+
+</body>
+
+</html>
