@@ -1,18 +1,13 @@
 package br.com.escola.cadastro_alunos.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import br.com.escola.cadastro_alunos.repository.AlunoRepository;
 import br.com.escola.cadastro_alunos.model.Aluno;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import br.com.escola.cadastro_alunos.repository.AlunoRepository;
 
-import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/alunos")
 public class AlunoController {
 
@@ -23,31 +18,45 @@ public class AlunoController {
     }
 
     @GetMapping
-    public List<Aluno> listarAlunos(){
-        return alunoRepository.listarTodos();
+    public String listarAlunos(Model model) {
+
+        model.addAttribute("aluno", new Aluno());
+        model.addAttribute("alunos", alunoRepository.listarTodos());
+
+        return "index";
     }
 
     @PostMapping
-    public Aluno salvarAluno(@RequestBody Aluno aluno){
+    public String salvarAluno(@ModelAttribute Aluno aluno) {
+
         alunoRepository.salvar(aluno);
-        return aluno;
+
+        return "redirect:/alunos";
     }
 
     @GetMapping("/{id}")
-    public Aluno buscarAluno(@PathVariable Integer id){
+    @ResponseBody
+    public Aluno buscarAluno(@PathVariable Integer id) {
+
         return alunoRepository.buscarPorIdAluno(id);
     }
 
     @PostMapping("/{id}/atualizar")
-    public Aluno atualizarAluno(@PathVariable Integer id, @RequestBody Aluno aluno){
+    public String atualizarAluno(@PathVariable Integer id,
+                                 @ModelAttribute Aluno aluno) {
+
         aluno.setId(id);
+
         alunoRepository.atualizar(aluno);
-        return aluno;
+
+        return "redirect:/alunos";
     }
 
-    @DeleteMapping("/{id}")
-    public void excluirAluno(@PathVariable Integer id) {
+    @PostMapping("/{id}/excluir")
+    public String excluirAluno(@PathVariable Integer id) {
+
         alunoRepository.excluir(id);
-    }
 
+        return "redirect:/alunos";
+    }
 }
