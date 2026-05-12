@@ -2,6 +2,7 @@
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.escola.cadastro_alunos.repository.AlunoRepository;
 import br.com.escola.cadastro_alunos.model.Aluno;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.List;
 
 @RestController
+@RequestMapping("/alunos")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;
@@ -20,30 +22,30 @@ public class AlunoController {
         this.alunoRepository = alunoRepository;
     }
 
-    @GetMapping("/alunos")
+    @GetMapping
     public List<Aluno> listarAlunos(){
         return alunoRepository.listarTodos();
     }
 
-    @PostMapping("/alunos")
+    @PostMapping
     public Aluno salvarAluno(@RequestBody Aluno aluno){
         alunoRepository.salvar(aluno);
         return aluno;
     }
 
-    @GetMapping("/alunos/{id}")
+    @GetMapping("/{id}")
     public Aluno buscarAluno(@PathVariable Integer id){
         return alunoRepository.buscarPorIdAluno(id);
     }
 
-    @PostMapping("/alunos/{id}/atualizar")
+    @PostMapping("/{id}/atualizar")
     public Aluno atualizarAluno(@PathVariable Integer id, @RequestBody Aluno aluno){
         aluno.setId(id);
         alunoRepository.atualizar(aluno);
         return aluno;
     }
 
-    @DeleteMapping("/alunos/{id}")
+    @DeleteMapping("/{id}")
     public void excluirAluno(@PathVariable Integer id) {
         alunoRepository.excluir(id);
     }
