@@ -34,24 +34,6 @@ public class AlunoController {
         return "redirect:/alunos";
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
-    public Aluno buscarAluno(@PathVariable Integer id) {
-
-        return alunoRepository.buscarPorIdAluno(id);
-    }
-
-    @PostMapping("/{id}/atualizar")
-    public String atualizarAluno(@PathVariable Integer id,
-                                 @ModelAttribute Aluno aluno) {
-
-        aluno.setId(id);
-
-        alunoRepository.atualizar(aluno);
-
-        return "redirect:/alunos";
-    }
-
     @PostMapping("/{id}/excluir")
     public String excluirAluno(@PathVariable Integer id) {
 
