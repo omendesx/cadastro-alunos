@@ -1,3 +1,9 @@
+    @GetMapping("/{id}/editar")
+    public String editarAluno(@PathVariable Integer id, Model model) {
+        Aluno aluno = alunoRepository.buscarPorIdAluno(id);
+        model.addAttribute("aluno", aluno);
+        return "editar-aluno";
+    }
 package br.com.escola.cadastro_alunos.controller;
 
 import br.com.escola.cadastro_alunos.model.Aluno;
