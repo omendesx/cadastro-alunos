@@ -2,7 +2,6 @@ package br.com.escola.cadastro_alunos.controller;
 
 import br.com.escola.cadastro_alunos.model.Aluno;
 import br.com.escola.cadastro_alunos.repository.AlunoRepository;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +18,6 @@ public class AlunoController {
         this.alunoRepository = alunoRepository;
     }
 
-    // =========================
-    // PÁGINAS HTML (THYMELEAF)
-    // =========================
 
     @GetMapping
     public String listarAlunos(Model model) {
@@ -48,19 +44,19 @@ public class AlunoController {
         return "redirect:/alunos";
     }
 
-    // =========================
+  
     // EDITAR ALUNO
-    // =========================
+   
 
     @GetMapping("/{id}/editar")
-    public String editarAluno(@PathVariable Integer id, Model model) {
+public String editarAluno(@PathVariable Integer id, Model model) {
 
-        Aluno aluno = alunoRepository.buscarPorIdAluno(id);
+    Aluno aluno = alunoRepository.buscarPorIdAluno(id);
 
-        model.addAttribute("aluno", aluno);
+    model.addAttribute("aluno", aluno);
 
-        return "editar-aluno";
-    }
+    return "editar-aluno";
+}
 
     @PostMapping("/atualizar")
     public String atualizarAluno(@ModelAttribute Aluno aluno) {
@@ -70,9 +66,9 @@ public class AlunoController {
         return "redirect:/alunos";
     }
 
-    // =========================
+  
     // API REST JSON
-    // =========================
+  
 
     @GetMapping("/api")
     @ResponseBody
