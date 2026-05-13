@@ -22,8 +22,7 @@ public class AlunoController {
 
         model.addAttribute("aluno", new Aluno());
         model.addAttribute("alunos", alunoRepository.listarTodos());
-
-        return "index";
+        return "alunos-painel";
     }
 
     @PostMapping
