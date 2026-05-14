@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/alunos")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;
@@ -18,8 +17,13 @@ public class AlunoController {
         this.alunoRepository = alunoRepository;
     }
 
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/alunos";
+    }
 
-    @GetMapping
+
+    @GetMapping("/alunos")
     public String listarAlunos(Model model) {
 
         model.addAttribute("aluno", new Aluno());
@@ -28,7 +32,7 @@ public class AlunoController {
         return "alunos-painel";
     }
 
-    @PostMapping
+    @PostMapping("/alunos")
     public String salvarAluno(@ModelAttribute Aluno aluno) {
 
         alunoRepository.salvar(aluno);
@@ -36,7 +40,7 @@ public class AlunoController {
         return "redirect:/alunos";
     }
 
-    @PostMapping("/{id}/excluir")
+    @PostMapping("/alunos/{id}/excluir")
     public String excluirAluno(@PathVariable Integer id) {
 
         alunoRepository.excluir(id);
@@ -48,7 +52,7 @@ public class AlunoController {
     // EDITAR ALUNO
    
 
-    @GetMapping("/{id}/editar")
+    @GetMapping("/alunos/{id}/editar")
 public String editarAluno(@PathVariable Integer id, Model model) {
 
     Aluno aluno = alunoRepository.buscarPorIdAluno(id);
@@ -58,7 +62,7 @@ public String editarAluno(@PathVariable Integer id, Model model) {
     return "editar-aluno";
 }
 
-    @PostMapping("/atualizar")
+    @PostMapping("/alunos/atualizar")
     public String atualizarAluno(@ModelAttribute Aluno aluno) {
 
         alunoRepository.atualizar(aluno);
@@ -70,21 +74,21 @@ public String editarAluno(@PathVariable Integer id, Model model) {
     // API REST JSON
   
 
-    @GetMapping("/api")
+    @GetMapping("/alunos/api")
     @ResponseBody
     public List<Aluno> listarAlunosApi() {
 
         return alunoRepository.listarTodos();
     }
 
-    @GetMapping("/api/{id}")
+    @GetMapping("/alunos/api/{id}")
     @ResponseBody
     public Aluno buscarAlunoApi(@PathVariable Integer id) {
 
         return alunoRepository.buscarPorIdAluno(id);
     }
 
-    @PostMapping("/api")
+    @PostMapping("/alunos/api")
     @ResponseBody
     public Aluno criarAlunoApi(@RequestBody Aluno aluno) {
 
@@ -93,7 +97,7 @@ public String editarAluno(@PathVariable Integer id, Model model) {
         return aluno;
     }
 
-    @PutMapping("/api/{id}")
+    @PutMapping("/alunos/api/{id}")
     @ResponseBody
     public Aluno atualizarAlunoApi(
             @PathVariable Integer id,
@@ -106,7 +110,7 @@ public String editarAluno(@PathVariable Integer id, Model model) {
         return alunoRepository.buscarPorIdAluno(id);
     }
 
-    @DeleteMapping("/api/{id}")
+    @DeleteMapping("/alunos/api/{id}")
     @ResponseBody
     public String excluirAlunoApi(@PathVariable Integer id) {
 
