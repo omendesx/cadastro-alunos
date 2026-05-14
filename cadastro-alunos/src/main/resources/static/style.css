@@ -128,3 +128,7 @@ th{
     text-align: center;
     font-weight: bold;
 }
+
+.div-table{
+    overflow-x: auto;
+}
